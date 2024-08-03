@@ -1,9 +1,11 @@
+//roboto font use it in layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "./component/NavigationBar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import CustomFooter from "./component/Footer";
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -34,6 +36,7 @@ export default function RootLayout({
           >
             <NavigationBar />
             {children}
+            <CustomFooter />
           </ThemeProvider>
         </body>
       </html>
