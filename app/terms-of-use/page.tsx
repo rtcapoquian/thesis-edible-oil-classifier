@@ -25,7 +25,7 @@ const TermsOfUse: React.FC = () => {
         </p>
         <h2 className="text-xl font-semibold mb-4">3. Disclaimer of Warranties</h2>
         <p className="mb-4">
-          Our website is provided on an "as is" and "as available" basis. We make no representations or warranties of any kind, express or implied, regarding the operation or availability of our website.
+          Our website is provided on an &quot;as is&quot; and &quot;as available&quot; basis. We make no representations or warranties of any kind, express or implied, regarding the operation or availability of our website.
         </p>
         <h2 className="text-xl font-semibold mb-4">4. Limitation of Liability</h2>
         <p className="mb-4">

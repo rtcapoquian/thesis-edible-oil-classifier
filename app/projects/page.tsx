@@ -118,9 +118,9 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
 );
 
 const Projects: React.FC = () => {
-  const categories = [
-    ...new Set(projectData.map((project) => project.category)),
-  ];
+  const categories = Array.from(
+    new Set(projectData.map((project) => project.category))
+  );
 
   return (
     <div className="container mt-8">

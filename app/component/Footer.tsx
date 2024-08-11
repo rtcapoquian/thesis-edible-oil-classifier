@@ -2,6 +2,7 @@ import React from "react";
 import { CardFooter } from "@/components/ui/card"; // Import CardFooter for styling
 import { Button } from "@/components/ui/button"; // Import Button for social media links
 import ModeToggle from "./ModeToggle";
+import Link from "next/link"; // Import Link from Next.js
 
 const CustomFooter: React.FC = () => {
   return (
@@ -50,21 +51,19 @@ const CustomFooter: React.FC = () => {
             </div>
           </div>
           <div className="text-center md:text-right flex items-center space-x-4">
-            <a href="/privacy-policy" target="_self">
+            <Link href="/privacy-policy" passHref>
               <ModeToggle />
-            </a>
-            <a href="/terms-of-use" target="_self">
+            </Link>
+            <Link href="/terms-of-use" passHref>
               <Button variant="outline" className="py-4 px-4">
                 Terms of Use
               </Button>
-            </a>
-            <a href="/privacy-policy" target="_self">
+            </Link>
+            <Link href="/privacy-policy" passHref>
               <Button variant="outline" className="py-4 px-4">
                 Privacy Policy
               </Button>
-            </a>
-
-            {/* Add ModeToggle here if needed */}
+            </Link>
           </div>
         </CardFooter>
       </div>
