@@ -12,7 +12,7 @@ import random
 
 # Config
 # SERIAL_PORT = '/dev/ttyUSB0'  # linux-based port
-SERIAL_PORT = 'COM4'    # windows-based port
+SERIAL_PORT = 'COM7'    # windows-based port
 BAUD_RATE = 9600
 MODEL_DIR = 'models'
 DATA_DIR = 'data'
