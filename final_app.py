@@ -10,6 +10,7 @@ import csv
 import serial
 import random
 
+#asd
 # Config
 # SERIAL_PORT = '/dev/ttyUSB0'  # linux-based port
 SERIAL_PORT = 'COM4'    # windows-based port
