@@ -224,6 +224,7 @@ class SamplePrepPage(BasePage):
             self.elapsed_time += 1
             self.after(1000, self.update_progress)
         else:
+            self.controller.duration = 601
             self.label.config(text="Sample preparation complete.")
             self.controller.show_page("SampleConfirmationPage")
             self.controller.pages["SampleConfirmationPage"].start_sample_gathering()
