@@ -10,7 +10,6 @@ import csv
 import serial
 import random
 
-#asd
 # Config
 # SERIAL_PORT = '/dev/ttyUSB0'  # linux-based port
 SERIAL_PORT = 'COM4'    # windows-based port
@@ -23,7 +22,7 @@ class EdibleOilApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Edible Oil Classifier")
-        self.root.geometry("480x320")
+        self.root.geometry("720x480")
         self.root.configure(bg="#2c2c2c")
         self.current_model = None
         self.duration = 0
@@ -39,7 +38,7 @@ class EdibleOilApp:
         self.pages["DataGatheringPage"] = DataGatheringPage(self)
         self.pages["ConfirmationPage"] = ConfirmationPage(self)
         self.pages["ProgressPage"] = ProgressPage(self)
-        self.pages["SampleDataGatheringPage"] = SampleDataGatheringPage(self)
+        self.pages["SamplePrepPage"] = SamplePrepPage(self)
         self.pages["SampleConfirmationPage"] = SampleConfirmationPage(self)
         self.pages["SampleProgressPage"] = SampleProgressPage(self)
         self.pages["TrainClassifyPage"] = TrainClassifyPage(self)
@@ -180,6 +179,7 @@ class ProgressPage(BasePage):
         self.progress.update()
         self.label.config(text=f"Elapsed Time: {elapsed_time} seconds / 60 seconds")
 
+    '''
     def mark_completion(self):
         if self.complete_label is None:
             self.complete_label = tk.Label(self.center_frame, text="Baseline data gathering complete.",
@@ -190,30 +190,43 @@ class ProgressPage(BasePage):
             self.proceed_button = tk.Button(self.center_frame, text="Proceed", bg="blue", fg="white", font=("Arial", 14),
                                             command=self.proceed_to_sample_collection)
             self.proceed_button.pack(pady=20)
-    
-    def proceed_to_sample_collection(self):
-        self.controller.show_page("SampleDataGatheringPage")
+    '''
+            
+    def mark_completion(self):
+        self.controller.show_page("SamplePrepPage")
+        self.controller.pages["SamplePrepPage"].start_timer()
 
-class SampleDataGatheringPage(BasePage):
+class SamplePrepPage(BasePage):
     def __init__(self, controller):
         super().__init__(controller, controller)
 
         self.center_frame = tk.Frame(self, bg="#2c2c2c")
         self.center_frame.pack(expand=True)
 
-        tk.Button(self, text="Back", bg="red", fg="white",
-                  command=lambda: controller.show_page("ProgressPage")).place(x=10, y=10)
+        self.progress = ttk.Progressbar(self.center_frame, mode="determinate", length=300)
+        self.progress.pack(expand=True, pady=50)
 
-        tk.Label(self.center_frame, text="Proceed to Gather Sample Data?", fg="white", bg="#2c2c2c", font=("Arial", 16)).pack(pady=20)
-        tk.Button(self.center_frame, text="Proceed", bg="blue", fg="white", font=("Arial", 16),
-                  command=self.start_sample_collection).pack(pady=20)
+        self.label = tk.Label(self.center_frame, text="Preparing Sample Chamber...",
+                              fg="white", bg="#2c2c2c", font=("Arial", 14))
+        self.label.pack(pady=10)
 
-    def start_sample_collection(self):
-        self.controller.duration = 601  # Sample data collection duration 10 mins
-        self.controller.show_page("SampleConfirmationPage")
+    def start_timer(self):
+        self.progress["value"] = 0  # Reset progress bar
+        self.elapsed_time = 0  # Reset elapsed time
+        self.update_progress()
 
+    def update_progress(self):
+        if self.elapsed_time < 61:
+            self.progress["value"] = (self.elapsed_time / 61) * 100
+            self.progress.update()
+            self.label.config(text=f"Buffer Time: {self.elapsed_time} seconds / 60 seconds")
 
-import serial
+            self.elapsed_time += 1
+            self.after(1000, self.update_progress)
+        else:
+            self.label.config(text="Sample preparation complete.")
+            self.controller.show_page("SampleConfirmationPage")
+            self.controller.pages["SampleConfirmationPage"].start_sample_gathering()
 
 class SampleConfirmationPage(BasePage):
     def __init__(self, controller):
@@ -221,7 +234,8 @@ class SampleConfirmationPage(BasePage):
 
         self.center_frame = tk.Frame(self, bg="#2c2c2c")
         self.center_frame.pack(expand=True)
-
+        
+        '''
         tk.Button(self, text="Back", bg="red", fg="white",
                   command=lambda: controller.show_page("SampleDataGatheringPage")).place(x=10, y=10)
 
@@ -230,7 +244,10 @@ class SampleConfirmationPage(BasePage):
 
         tk.Button(self.center_frame, text="Confirm and Start Gathering", bg="green", fg="white", font=("Arial", 14),
                   command=self.start_sample_gathering).pack(pady=20)
+        '''
 
+        tk.Label(self.center_frame, text="Collecting Sample Data...",
+                 fg="white", bg="#2c2c2c", font=("Arial", 14), wraplength=400).pack(pady=20)
     def start_sample_gathering(self):
         """Start the sample data gathering process in a separate thread."""
         self.controller.show_page("SampleProgressPage")
