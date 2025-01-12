@@ -11,17 +11,23 @@ npm run build
 if [ $? -eq 0 ]; then
   echo "Build successful!"
 
-  # Navigate to the 'out' directory (or the directory where your build output is)
-  cd out
+  # Navigate to the 'output' directory
+  cd output
 
-  # Add all changes to git
+  # Initialize git if not already initialized
+  if [ ! -d ".git" ]; then
+    git init
+    git remote add origin https://github.com/your-username/your-repo.git
+  fi
+
+  # Add all changes in the output folder to git
   git add .
 
   # Commit the changes
-  git commit -m "Automated commit after build"
+  git commit -m "Automated commit after build - deploying to Azure Static Web App"
 
   # Push the changes to GitHub
-  git push origin main
+  git push origin main --force
 
 else
   echo "Build failed. Aborting push."
