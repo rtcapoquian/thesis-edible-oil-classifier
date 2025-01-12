@@ -17,7 +17,7 @@ export default function HeroSection() {
       <div className="w-full max-w-6xl px-4 py-4 flex flex-col-reverse md:flex-row items-center justify-between">
         <div className="flex flex-col w-full md:w-1/2 text-center md:text-left">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 pt-4">
-            Hi, I&apos;m Reji Capoquian
+            Hi, I&apos;m Reji Capoquia
           </h1>
           <p className="text-lg md:text-3xl mb-6">Full Stack Developer</p>
           <div>
